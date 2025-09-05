@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_indeepvision_onevision_docs=self.webpackChunk_indeepvision_onevision_docs||[]).push([[8083],{839:o=>{o.exports=JSON.parse('{"label":"facebook","permalink":"/onevision/blog/tags/facebook","allTagsPath":"/onevision/blog/tags","count":1}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_indeepvision_onevision_docs=self.webpackChunk_indeepvision_onevision_docs||[]).push([[1592],{7388:i=>{i.exports=JSON.parse('{"label":"Digital I/O","permalink":"/onevision/blog/tags/digital-i-o","allTagsPath":"/onevision/blog/tags","count":1}')}}]);

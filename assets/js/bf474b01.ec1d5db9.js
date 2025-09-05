@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_indeepvision_onevision_docs=self.webpackChunk_indeepvision_onevision_docs||[]).push([[1191],{303:e=>{e.exports=JSON.parse('{"label":"Advantech","permalink":"/onevision/blog/tags/advantech","allTagsPath":"/onevision/blog/tags","count":1}')}}]);
