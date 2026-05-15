@@ -1,0 +1,121 @@
+{
+    "header": {
+        "author": "J.Mora",
+        "description": "",
+        "projectName": "ov-demo-display-add-remove-elements",
+        "creationDate": 1778834695163,
+        "configKey": "61a1539d-dff8-4bba-8d16-283e7f9ecf6d"
+    },
+    "brains": {
+        "brainsConfig": []
+    },
+    "cameras": {
+        "camerasConfig": []
+    },
+    "visu": {
+        "layout": {
+            "data": {
+                "4fa1af06-320f-4864-a2e8-c046dbdf442e": {
+                    "elements": {
+                        "65c236e1-7b44-4862-854d-481dac74653d": {
+                            "id": "65c236e1-7b44-4862-854d-481dac74653d",
+                            "friendlyName": "display1",
+                            "type": "Display",
+                            "position": {
+                                "top": "87px",
+                                "left": "420px",
+                                "height": "820px",
+                                "width": "823px",
+                                "hidden": false,
+                                "ratioLocked": false
+                            },
+                            "config": {
+                                "enableDisplay2dMode": true,
+                                "enableHoveringEntities": false,
+                                "numHistoryElements": 30
+                            },
+                            "style": {
+                                "borderColor": "#0000001f",
+                                "borderWidth": 1,
+                                "borderRadius": 0,
+                                "backgroundColor": "#ffffff",
+                                "iconColor": "#aab8c2"
+                            }
+                        }
+                    },
+                    "layers": [
+                        "65c236e1-7b44-4862-854d-481dac74653d"
+                    ]
+                }
+            },
+            "pages": [
+                {
+                    "id": "4fa1af06-320f-4864-a2e8-c046dbdf442e",
+                    "friendlyName": "page0"
+                }
+            ],
+            "settings": {
+                "screenSize": {
+                    "width": 1662,
+                    "height": 994
+                },
+                "backgroundColor": "#f0f0f0",
+                "units": "pixels",
+                "sidePanelMode": "fixed"
+            },
+            "functions": [],
+            "variables": [
+                "IMAGE_SIZE"
+            ]
+        },
+        "configKey": "545d93c9-4e2d-4220-9af5-52bba2c17e19"
+    },
+    "internal": {
+        "softwareVersion": [
+            11,
+            7,
+            9
+        ],
+        "lastModified": 1778858085940,
+        "configKey": "50144234-1980-4253-9982-f4c377ff2d9a"
+    },
+    "runtime": {
+        "sequences": [
+            {
+                "id": "acb497a7-6042-48a4-92e4-e666af9a97da",
+                "name": "init",
+                "type": "INIT",
+                "code": "global var ctrl = Visu.page0.display1.getController();\r\n\r\nctrl.clear();\r\n\r\nglobal var IMAGE_SIZE = 1000;\r\nvar image = new Ve.Image(IMAGE_SIZE, IMAGE_SIZE, Ve.EPixelFormat.RGB8, [0, 0, 0]);\r\n\r\nctrl.setImage(image);\r\nctrl.zoom(\"frame\");\r\nVisu.update();",
+                "disabled": false,
+                "lastUpdated": 0.8043270618315279
+            },
+            {
+                "id": "f5a37416-7e8a-480f-8ff6-f0aa09d6e2f1",
+                "name": "script1",
+                "type": "SIMPLE",
+                "code": "var GRID_SIZE   = 5;\r\nvar CELL_SIZE   = IMAGE_SIZE / GRID_SIZE;    // 100px per cell\r\nvar TOTAL_CELLS = GRID_SIZE * GRID_SIZE;     // 100\r\nvar GAP         = 4;                         // gap between cells\r\nvar DELAY_MS    = 80;\r\n\r\nvar COLORS: string[] = [\"#cdff12\", \"#ff4444\", \"#44aaff\", \"#ff8800\", \"#cc44ff\"];\r\n\r\nvar cellIds: number[] = [];\r\nfor (var i = 0; i < TOTAL_CELLS; i++) {\r\n    cellIds.push(-1);\r\n}\r\n\r\nvar emptyCells: number[] = [];\r\nfor (var i = 0; i < TOTAL_CELLS; i++) {\r\n    emptyCells.push(i);\r\n}\r\n\r\nvar filledCells: number[] = [];\r\n\r\nwhile (true) {\r\n    \r\n    // Phase 1: randomly fill all cells\r\n    while (emptyCells.length > 0) {\r\n        var fillPickIdx = Math.randint(0, emptyCells.length - 1);\r\n        var fillCell    = emptyCells[fillPickIdx];\r\n        \r\n        var row  = Math.floor(fillCell / GRID_SIZE, 0);\r\n        var col  = fillCell % GRID_SIZE;\r\n        var side = CELL_SIZE - GAP;          // rect fills cell minus gap\r\n        var cx   = col * CELL_SIZE + side / 2; // top-left lands at col*CELL_SIZE\r\n        var cy   = row * CELL_SIZE + side / 2; // top-left lands at row*CELL_SIZE\r\n        \r\n        var colorIdx = Math.randint(0, COLORS.length - 1);\r\n        var color    = COLORS[colorIdx];\r\n        \r\n        var rect = new Ve.Rect2d(cx, cy, side, side, 0, false);\r\n        rect.filled      = true;\r\n        rect.fillColor   = color;\r\n        rect.fillOpacity = 0.5;\r\n        rect.lineColor   = color;\r\n        rect.lineWidth = 2;\r\n        \r\n        ctrl.addElement(rect as Ve.VisionElement, \"cells\", { skipFullRefresh: true } as DisplayElementOptions);\r\n        cellIds[fillCell] = rect.getId();\r\n        \r\n        emptyCells[fillPickIdx] = emptyCells[emptyCells.length - 1];\r\n        emptyCells.pop();\r\n        filledCells.push(fillCell);\r\n        \r\n        Visu.update();\r\n        waitTime(DELAY_MS);\r\n    }\r\n    \r\n    // Phase 2: randomly remove all cells\r\n    while (filledCells.length > 0) {\r\n        var removePickIdx = Math.randint(0, filledCells.length - 1);\r\n        var removeCell    = filledCells[removePickIdx];\r\n        \r\n        ctrl.removeElement(cellIds[removeCell]);\r\n        cellIds[removeCell] = -1;\r\n        \r\n        filledCells[removePickIdx] = filledCells[filledCells.length - 1];\r\n        filledCells.pop();\r\n        emptyCells.push(removeCell);\r\n        \r\n        Visu.update();\r\n        waitTime(DELAY_MS);\r\n    }\r\n}",
+                "disabled": false,
+                "lastUpdated": 0.7408818828616128
+            }
+        ],
+        "panelActions": [],
+        "results": [],
+        "configKey": "407ddb80-af74-4af6-85fb-f41eacbd4179"
+    },
+    "parameters": {
+        "paramsConfig": {
+            "name": "Parameters",
+            "type": "node_element",
+            "uuid": "",
+            "access": "NONE",
+            "childs": {},
+            "description": "Configuration of the parameters",
+            "comment": "",
+            "format": "default",
+            "friendly_id": "",
+            "hidden": false,
+            "position": -1
+        },
+        "configKey": "d9043766-4f54-450c-a7b6-8be009a43895"
+    }
+}

@@ -1,0 +1,111 @@
+{
+    "header": {
+        "author": "J.Mora",
+        "description": "",
+        "projectName": "ov-demo-display-send-capture",
+        "creationDate": 1778830799598,
+        "configKey": "6a86f9d4-fa27-4f8b-8577-083f98dedf77"
+    },
+    "brains": {
+        "brainsConfig": []
+    },
+    "cameras": {
+        "camerasConfig": []
+    },
+    "visu": {
+        "layout": {
+            "data": {
+                "3685996f-aadd-41ee-8e9c-7919cfb3904d": {
+                    "elements": {
+                        "e5070b45-1494-4a2b-8dce-9809ef651f41": {
+                            "id": "e5070b45-1494-4a2b-8dce-9809ef651f41",
+                            "friendlyName": "display1",
+                            "type": "Display",
+                            "position": {
+                                "top": "121px",
+                                "left": "257px",
+                                "height": "768px",
+                                "width": "1149px",
+                                "hidden": false,
+                                "ratioLocked": false
+                            },
+                            "config": {
+                                "enableDisplay2dMode": true,
+                                "enableHoveringEntities": false,
+                                "numHistoryElements": 30
+                            },
+                            "style": {
+                                "borderColor": "#0000001f",
+                                "borderWidth": 1,
+                                "borderRadius": 0,
+                                "backgroundColor": "#ffffff",
+                                "iconColor": "#aab8c2"
+                            }
+                        }
+                    },
+                    "layers": [
+                        "e5070b45-1494-4a2b-8dce-9809ef651f41"
+                    ]
+                }
+            },
+            "pages": [
+                {
+                    "id": "3685996f-aadd-41ee-8e9c-7919cfb3904d",
+                    "friendlyName": "page0"
+                }
+            ],
+            "settings": {
+                "screenSize": {
+                    "width": 1662,
+                    "height": 994
+                },
+                "backgroundColor": "#f0f0f0",
+                "units": "pixels",
+                "sidePanelMode": "fixed"
+            },
+            "functions": [],
+            "variables": []
+        },
+        "configKey": "58d7b880-8336-42ff-b71e-c4366a3e84b8"
+    },
+    "internal": {
+        "softwareVersion": [
+            11,
+            7,
+            9
+        ],
+        "lastModified": 1778849634834,
+        "configKey": "43944405-a8d4-4ea1-bbc4-5d49872ef8c6"
+    },
+    "runtime": {
+        "sequences": [
+            {
+                "id": "710727c7-f670-4a18-85e0-a5afab242b61",
+                "name": "script1",
+                "type": "SIMPLE",
+                "code": "//\r\n// Constants\r\n//\r\n\r\nvar COLOR_GREEN_HEX = \"#cdff12\";\r\nvar COLOR_DARK_HEX = \"#182b31\";\r\nvar COLOR_WHITE_HEX = \"#ffffff\";\r\nvar FONT_SIZE = 60;\r\nvar FILL_OPACITY = 0.2;\r\nvar IMAGE_WIDTH = 1200;\r\nvar IMAGE_HEIGHT = 800;\r\n\r\n//\r\n// Capture 1\r\n//\r\n\r\n// Create image1\r\nvar image1 = new Ve.Image(IMAGE_WIDTH, IMAGE_HEIGHT, Ve.EPixelFormat.RGB8, [205, 255, 18]);\r\nvar dictionary1: Record<string, Ve.VisionElement[]> = {};\r\n\r\n// Create elements for image1\r\nvar veList1: Ve.VisionElement[] = [];\r\n\r\nvar string1 = new Ve.String(\"Capture 1\");\r\nstring1.color = COLOR_DARK_HEX;\r\nstring1.fontSize = FONT_SIZE;\r\nstring1.setAnchor(new Ve.Point2d(30,30));\r\nveList1.push(string1 as Ve.VisionElement);\r\n\r\nvar rect1 = new Ve.Rect2d(200, 200, 400, 300, 30, true);\r\nrect1.lineColor = COLOR_DARK_HEX;\r\nrect1.filled = true;\r\nrect1.fillColor = COLOR_DARK_HEX;\r\nrect1.fillOpacity = FILL_OPACITY;\r\nveList1.push(rect1 as Ve.VisionElement);\r\n\r\nvar segment1 = new Ve.Segment2d(650,150, 800, 500);\r\nsegment1.lineColor = COLOR_DARK_HEX;\r\nsegment1.cap1 = Ve.ECapType.Round;\r\nsegment1.cap2 = Ve.ECapType.Round;\r\nveList1.push(segment1 as Ve.VisionElement);\r\n\r\n// Create capture 1\r\nvar capture1 = new Capture(image1);\r\ncapture1.addVisionElement(veList1);\r\n\r\n//\r\n// Capture 2\r\n//\r\n\r\n// Create second image and elements\r\nvar image2 = new Ve.Image(IMAGE_WIDTH, IMAGE_HEIGHT, Ve.EPixelFormat.RGB8, [24, 43, 49]);\r\nvar dictionary2: Record<string, Ve.VisionElement[]> = {};\r\n\r\n// Create elements for image2\r\nvar veList2: Ve.VisionElement[] = [];\r\n\r\nvar string2 = new Ve.String(\"Capture 2\");\r\nstring2.color = COLOR_WHITE_HEX;\r\nstring2.fontSize = FONT_SIZE;\r\nstring2.setAnchor(new Ve.Point2d(30,30));\r\nveList2.push(string2 as Ve.VisionElement);\r\n\r\nvar pathPoint1 = new Ve.Point2d(260.80, 165.60);\r\nvar pathPoint2 = new Ve.Point2d(225.20, 386.40);\r\nvar pathPoint3 = new Ve.Point2d(330.40, 247.20);\r\nvar pathPoint4 = new Ve.Point2d(435.60, 442.40);\r\nvar pathPoint5 = new Ve.Point2d(383.20, 582.40);\r\nvar pathPoint6 = new Ve.Point2d(278.00, 604.80);\r\nvar path2 = new Ve.Path2d([pathPoint1,pathPoint2, pathPoint3, pathPoint4, pathPoint5, pathPoint6], true);\r\npath2.filled = true;\r\npath2.fillColor = COLOR_GREEN_HEX;\r\npath2.fillOpacity = FILL_OPACITY;\r\nveList2.push(path2 as Ve.VisionElement);\r\n\r\nvar circle2 = new Ve.Circle2d(750,550,100);\r\ncircle2.lineColor = COLOR_GREEN_HEX;\r\nveList2.push(circle2 as Ve.VisionElement);\r\n\r\nvar point2 = new Ve.Point2d(650,200);\r\npoint2.color = COLOR_GREEN_HEX;\r\npoint2.markerSize = 10;\r\nveList2.push(point2 as Ve.VisionElement);\r\n\r\n// Create capture2\r\nvar capture2 = new Capture(image2);\r\ncapture2.addVisionElement(veList2);\r\n\r\nvar flag = \"1\"; // It can be only \"1\" or \"2\"\r\n\r\n//\r\n// Loop\r\n//\r\n\r\nwhile (true) {\r\n    var capture: Capture = {} as Capture;\r\n    if (flag == \"1\") {\r\n        capture = capture1;\r\n    } else {\r\n        capture = capture2;\r\n    }\r\n    \r\n    // Send capture\r\n    Visu.page0.display1.sendCapture(capture);\r\n    Visu.update();\r\n    \r\n    // Update flag\r\n    if (flag == \"1\") {\r\n        flag = \"2\";\r\n    } else {\r\n        flag = \"1\";\r\n    }\r\n    \r\n    // Wait a bit before to update capture\r\n    waitTime(1500);\r\n}",
+                "disabled": false,
+                "lastUpdated": 0.4146834306710583
+            }
+        ],
+        "panelActions": [],
+        "results": [],
+        "configKey": "09497190-6e7f-4f3b-ba39-d426b62d13a4"
+    },
+    "parameters": {
+        "paramsConfig": {
+            "name": "Parameters",
+            "type": "node_element",
+            "uuid": "",
+            "access": "NONE",
+            "childs": {},
+            "description": "Configuration of the parameters",
+            "comment": "",
+            "format": "default",
+            "friendly_id": "",
+            "hidden": false,
+            "position": -1
+        },
+        "configKey": "9cd558ff-45a6-471d-850f-238b9c5c1dbb"
+    }
+}
